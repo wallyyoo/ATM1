@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject withdrawPanel;
     public GameObject depositError;
     public GameObject withdrawError;
+    public GameObject transferPanel;
     
     [Header("직접입력 UI")]
     public TMP_InputField depositInputField;
@@ -105,6 +106,7 @@ public class UIManager : MonoBehaviour
         withdrawError.SetActive(false);
         signInPanel.SetActive(false);
         loginPanel.SetActive(false);
+        transferPanel.SetActive(false);
     }
     public void ShowlogInPanel()
     {
@@ -115,6 +117,7 @@ public class UIManager : MonoBehaviour
         loginPanel.SetActive(true);
         signUpErrorPopup.SetActive(false);
         loginErrorPopup.SetActive(false);
+        transferPanel.SetActive(false);
     }    
     public void ShowSignInPanel()
     {
@@ -125,6 +128,7 @@ public class UIManager : MonoBehaviour
         loginPanel.SetActive(false);
         signUpErrorPopup.SetActive(false);
         loginErrorPopup.SetActive(false);
+        transferPanel.SetActive(false);
     }    
     public void ShowDepositPanel()
     {
@@ -141,6 +145,15 @@ public class UIManager : MonoBehaviour
         signInPanel.SetActive(false);
         loginPanel.SetActive(false);
 
+    }
+
+    public void ShowTransferPanel()
+    {
+        transferPanel.SetActive(true);
+        DnW_Btn_panel.SetActive(false);
+        signInPanel.SetActive(false);
+        loginPanel.SetActive(false);
+        
     }
     
     //에러 안내
@@ -174,12 +187,13 @@ public class UIManager : MonoBehaviour
     // 로그인, 회원가입 처리 
     public void OnLoginButtonClick()
     {
-        string id = loginIdInputField.text;
-        string pw = loginPwInputField.text;
+        string id = loginIdInputField.text.Trim();
+        string pw = loginPwInputField.text.Trim();
 
         var result = SaveSystem.TryLogin(id,pw);
         if (result == SaveSystem.loginResult.Success)
         {
+            GameManager.Instance.Refresh();
             ShowMainButtons();
         }
         else if (result == SaveSystem.loginResult.NoId)
@@ -195,10 +209,10 @@ public class UIManager : MonoBehaviour
     }
     public void OnSignUpButtonClick()
     {
-        string id = signUpIdInputField.text;
-        string name = signUpNameInputField.text;
-        string pw = signUpPwInputField.text;
-        string pwConfirm = signUpPwConfirmInputField.text;
+        string id = signUpIdInputField.text.Trim();
+        string name = signUpNameInputField.text.Trim();
+        string pw = signUpPwInputField.text.Trim();
+        string pwConfirm = signUpPwConfirmInputField.text.Trim();
  	
 	   signUpIdInputField.text = "";
   	   signUpNameInputField.text = "";
@@ -220,7 +234,7 @@ public class UIManager : MonoBehaviour
         if (SaveSystem.TrySignUp(id, pw, name))
         {
 			var allUsers = SaveSystem.LoadAllUsers();
- 		    var newUser = allUsers.users.Find(u => u.ID == id);
+ 		    var newUser = allUsers.users.Find(u => u.ID.Trim() == id.Trim());
 	
  		    GameManager.Instance.userData = newUser; 
     		GameManager.Instance.Refresh();

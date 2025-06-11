@@ -7,7 +7,10 @@ public class UserData
     public int Balance;
     public string ID;
     public string Password;
-    public UserData(string UserName, int Cash, int Balance, string ID, string Password)
+
+    public UserData() {}
+
+public UserData(string UserName, int Cash, int Balance, string ID, string Password)
     {
         this.UserName = UserName;
         this.Cash = Cash;
