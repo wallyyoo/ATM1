@@ -106,6 +106,7 @@ public class UIManager : MonoBehaviour
         withdrawError.SetActive(false);
         signInPanel.SetActive(false);
         loginPanel.SetActive(false);
+        transferPanel.SetActive(false);
     }
     public void ShowlogInPanel()
     {
@@ -116,6 +117,7 @@ public class UIManager : MonoBehaviour
         loginPanel.SetActive(true);
         signUpErrorPopup.SetActive(false);
         loginErrorPopup.SetActive(false);
+        transferPanel.SetActive(false);
     }    
     public void ShowSignInPanel()
     {
@@ -126,6 +128,7 @@ public class UIManager : MonoBehaviour
         loginPanel.SetActive(false);
         signUpErrorPopup.SetActive(false);
         loginErrorPopup.SetActive(false);
+        transferPanel.SetActive(false);
     }    
     public void ShowDepositPanel()
     {
@@ -190,6 +193,7 @@ public class UIManager : MonoBehaviour
         var result = SaveSystem.TryLogin(id,pw);
         if (result == SaveSystem.loginResult.Success)
         {
+            GameManager.Instance.Refresh();
             ShowMainButtons();
         }
         else if (result == SaveSystem.loginResult.NoId)

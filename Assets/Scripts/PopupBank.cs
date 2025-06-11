@@ -81,4 +81,51 @@ public class PopupBank : MonoBehaviour
         }
         UIManager.Instance.withdrawInputField.text = "";
     }
+    public void OnDepositButton10000()
+    {
+        HandleDeposit(10000);
+    }
+
+    public void OnDepositButton30000()
+    {
+        HandleDeposit(30000);
+    }
+
+    public void OnDepositButton50000()
+    {
+        HandleDeposit(50000);
+    }
+
+    // ------------------------ 버튼 고정 금액 출금 ------------------------
+
+    public void OnWithdrawButton10000()
+    {
+        HandleWithdraw(10000);
+    }
+
+    public void OnWithdrawButton30000()
+    {
+        HandleWithdraw(30000);
+    }
+
+    public void OnWithdrawButton50000()
+    {
+        HandleWithdraw(50000);
+    }
+
+    // ------------------------ 내부 입출금 공통 처리 ------------------------
+
+    private void HandleDeposit(int amount)
+    {
+        Debug.Log("[버튼입금] 금액: " + amount);
+        if (!GameManager.Instance.TryDeposit(amount))
+            UIManager.Instance.ShowDepositError();
+    }
+
+    private void HandleWithdraw(int amount)
+    {
+        Debug.Log("[버튼출금] 금액: " + amount);
+        if (!GameManager.Instance.TryWithdraw(amount))
+            UIManager.Instance.ShowWithdrawError();
+    }
 }
