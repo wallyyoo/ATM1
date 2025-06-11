@@ -20,6 +20,34 @@ public class PopupBank : MonoBehaviour
         UIManager.Instance.ShowMainButtons();
     }
 
+    public TMP_InputField transferNameInput;
+    public TMP_InputField trabsferamountInput;
+
+    public void OnTransferConfirmButtonClick()
+    {
+        string name = transferNameInput.text.Trim();
+        int amount;
+
+        if (string.IsNullOrWhiteSpace(name) || !int.TryParse(trabsferamountInput.text, out amount) || amount <= 0)
+        {
+            Debug.Log("송금 실패, 입력값 오류");
+            return;
+        }
+        
+        bool result = SaveSystem.TryTransfer(name, amount);
+        if (!result)
+        {
+            Debug.Log("대상 없음 또는 잔액 부족");
+        }
+        else
+        {
+            Debug.Log("송금 완료");
+        }
+        
+        transferNameInput.text = "";
+        trabsferamountInput.text = "";
+        
+    }
     //금액의 계산과 정수만 받는걸 한번에 체크
 
     public void OnDepositConfirmButtonClick()

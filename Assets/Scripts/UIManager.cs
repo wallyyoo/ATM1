@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     public GameObject withdrawPanel;
     public GameObject depositError;
     public GameObject withdrawError;
+    public GameObject transferPanel;
     
     [Header("직접입력 UI")]
     public TMP_InputField depositInputField;
@@ -141,6 +142,15 @@ public class UIManager : MonoBehaviour
         signInPanel.SetActive(false);
         loginPanel.SetActive(false);
 
+    }
+
+    public void ShowTransferPanel()
+    {
+        transferPanel.SetActive(true);
+        DnW_Btn_panel.SetActive(false);
+        signInPanel.SetActive(false);
+        loginPanel.SetActive(false);
+        
     }
     
     //에러 안내

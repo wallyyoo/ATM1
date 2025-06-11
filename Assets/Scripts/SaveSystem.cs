@@ -87,23 +87,27 @@ public class SaveSystem
     return true;
   }
   
-  public static bool TryTransfer(string toId, int amount)
+  public static bool TryTransfer(string toUserName, int amount)
   {
     if (GameManager.Instance.userData.Balance < amount || amount <= 0)
       return false;
     
     var allUsers = LoadAllUsers();
-    var toUser = allUsers.users.Find(u => u.ID == toId);
+    var toUser = allUsers.users.Find(u => u.UserName.Trim() == toUserName.Trim());
     
     if(toUser == null)
       return false;
 
     var myUser = allUsers.users.Find(u => u.ID == GameManager.Instance.userData.ID);
+    if (myUser == null)
+      return false;
+    
+    
     myUser.Balance -= amount;
     toUser.Balance += amount;
     SaveAllUsers(allUsers);
+
     GameManager.Instance.userData.Balance -= amount;
-    
     GameManager.Instance.Refresh();
     return true;
   }
